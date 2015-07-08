@@ -18,6 +18,7 @@ Bundle 'tmhedberg/SimpylFold'
 Bundle 'docunext/closetag.vim'
 Bundle 'nono/jquery.vim'
 Bundle 'jeetsukumaran/vim-buffergator'
+Bundle 'rstacruz/sparkup'
 
 " SnipMate
 Bundle 'MarcWeber/vim-addon-mw-utils'
@@ -55,7 +56,7 @@ let g:solarized_termcolors=256
 
 set t_Co=256
 set background=light
-colorscheme solarized
+colorscheme monokai
 
 autocmd FileType python set colorcolumn=79
 
@@ -118,6 +119,8 @@ let g:airline_right_sep = ''
 " Flake8
 autocmd BufWritePost *.py call Flake8()
 
+let g:flake8_ignore="F403"
+
 " Folding
 " set foldmethod=indent
 " set foldnestmax=2
@@ -126,8 +129,8 @@ autocmd BufWritePost *.py call Flake8()
 au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
 " easier moving of code blocks
-vnoremap < <gv " better indentation
-vnoremap > >gv " better indentation
+vnoremap < <gv
+vnoremap > >gv
 
 " Quicksave command
 noremap <C-z> :update<CR>
@@ -146,3 +149,13 @@ map <Leader>m <esc>:tabnext<CR>
 set nobackup
 set nowritebackup
 set noswapfile
+
+" Commenting blocks of code.
+autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+autocmd FileType conf,fstab       let b:comment_leader = '# '
+autocmd FileType tex              let b:comment_leader = '% '
+autocmd FileType mail             let b:comment_leader = '> '
+autocmd FileType vim              let b:comment_leader = '" '
+noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
