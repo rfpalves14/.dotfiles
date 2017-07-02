@@ -19,6 +19,7 @@ Bundle 'docunext/closetag.vim'
 Bundle 'nono/jquery.vim'
 Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'rstacruz/sparkup'
+Bundle 'tomtom/tcomment_vim'
 
 " SnipMate
 Bundle 'MarcWeber/vim-addon-mw-utils'
@@ -59,6 +60,7 @@ set background=light
 colorscheme monokai
 
 autocmd FileType python set colorcolumn=79
+autocmd FileType javascript set colorcolumn=80
 
 " Indenting
 set smartindent
@@ -66,6 +68,7 @@ set expandtab
 set nowrap
 set sw=2 ts=2 sts=2
 autocmd FileType python :setlocal sw=4 ts=4 sts=4
+autocmd FileType javascript :setlocal sw=4 ts=4 sts=4
 
 " Searching
 set hlsearch " highlight matches
@@ -105,6 +108,7 @@ map <F2> :NERDTreeToggle<CR>
 let NERDTreeMapOpenSplit = "s"
 let NERDTreeMapOpenVSplit = "v"
 let NERDTreeIgnore = ['\.pyc$']
+autocmd VimEnter * NERDTree
 
 " CtrlP
 let g:ctrlp_working_path_mode = 0
@@ -119,14 +123,13 @@ let g:airline_right_sep = ''
 " Flake8
 autocmd BufWritePost *.py call Flake8()
 
-let g:flake8_ignore="F403"
-
 " Folding
 " set foldmethod=indent
 " set foldnestmax=2
 
 " Jquery plugin settings
 au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+au BufRead,BufNewFile *.html set ft=html syntax=htmldjango
 
 " easier moving of code blocks
 vnoremap < <gv
@@ -159,3 +162,5 @@ autocmd FileType mail             let b:comment_leader = '> '
 autocmd FileType vim              let b:comment_leader = '" '
 noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
+nnoremap <silent> <leader>w :!open -a "Google Chrome" %<CR><CR>
